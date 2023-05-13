@@ -21,7 +21,9 @@ const GistList = () => {
   return (
     <ListContainer>
       {error && <Error error={error} />}
-      {!loading && !gists.length && <NoData>No Data Available</NoData>}
+      {!loading && !gists.length && !error && (
+        <NoData>No Data Available</NoData>
+      )}
       {loading ? <Loader /> : gists?.map((gist) => <Gist gist={gist} />)}
     </ListContainer>
   );
