@@ -3,7 +3,6 @@ import { BiMessage } from "react-icons/bi";
 import { BsFillStarFill } from "react-icons/bs";
 import { GoRepoForked, GoCode } from "react-icons/go";
 import { HiDocumentText } from "react-icons/hi";
-import Loader from "./Loader";
 
 const Gist = ({ gist }) => {
   const numberOfFiles = Object.keys(gist?.files).length;
@@ -114,6 +113,7 @@ const Container = styled.div`
 `;
 const ContainerFlex = styled(Container)`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export default Gist;

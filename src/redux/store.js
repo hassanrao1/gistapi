@@ -1,6 +1,10 @@
-import { createStore } from "redux";
-import rootReducer from "./rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { gistsReducer } from "./gist/gistReducer";
 
-const store = createStore(rootReducer);
+const store = configureStore({
+  reducer: {
+    gists: gistsReducer
+  },
+});
 
 export default store;

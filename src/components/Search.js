@@ -1,19 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Octicon from "react-octicon";
-import { getGistForUser, getPublicGists } from "../services/gistService";
+import { searchGists } from "../redux/gist/gistActions";
+import { useDispatch } from "react-redux";
 
 const Search = () => {
-  const search = async () => {
-    // const a = await getGistForUser("hassan");
+  const dispatch = useDispatch();
+  const handleSearch = async (e) => {
+    dispatch(searchGists(e.target.value));
   };
 
-  search();
   return (
     <Wrapper>
       <InputBox>
         <Octicon name="search" />
-        <Input placeholder="Search Gists for the username" />
+        <Input
+          placeholder="Search Gists for the username"
+          onChange={handleSearch}
+        />
       </InputBox>
     </Wrapper>
   );

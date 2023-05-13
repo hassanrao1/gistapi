@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Gist from "./Gist";
 import styled from "styled-components";
-import { getPublicGists } from "../services/gistService";
 import Loader from "./Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGists } from "../redux/gist/gistActions";
+import Error from "./Error";
 const GistList = () => {
-  const [gists, setGists] = useState(null);
+  const dispatch = useDispatch();
+  const { loading, gists, error } = useSelector((state) => state.gists);
 
   const getGists = async () => {
-    const { data } = await getPublicGists();
-    setGists(data);
+    dispatch(fetchGists());
   };
-
-  console.log(gists);
 
   useEffect(() => {
     getGists();
   }, []);
 
-  
+  console.log(loading, gists);
   return (
     <ListContainer>
-        {!gists && <Loader />}
-      {gists?.map((gist) => (
-        <Gist gist={gist} />
-      ))}
+      {error && <Error error={error} />}
+      {!loading && !gists.length && <NoData>No Data Available</NoData>}
+      {loading ? <Loader /> : gists?.map((gist) => <Gist gist={gist} />)}
     </ListContainer>
   );
 };
@@ -32,6 +31,13 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const NoData = styled.div`
+  display: flex;
+  align-items: center;
+  height: 80vh;
+  font-weight: bold;
 `;
 
 export default GistList;
